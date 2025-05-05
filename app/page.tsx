@@ -91,6 +91,7 @@ type HabitContextType = {
   };
   completionRate: number;
   completionHistory: CompletionHistory;
+  setCompletionHistory: React.Dispatch<React.SetStateAction<CompletionHistory>>;
 };
 
 // Mock data
@@ -296,7 +297,8 @@ function HabitDataProvider({ children }: { children: ReactNode }) {
     updateHabitCompletion,
     streakData,
     completionRate,
-    completionHistory
+    completionHistory,
+    setCompletionHistory
   };
 
   return (
@@ -2561,3 +2563,31 @@ function HabitCharts() {
       </ThemeProvider>
     );
   }
+
+
+  const StatsDisplay = () => {
+    const habitContext = useContext(HabitContext);
+  
+    if (!habitContext) {
+      return <div>Loading...</div>;
+    }
+  
+    const { streakData, completionRate, setCompletionHistory } = habitContext;
+  
+    useEffect(() => {
+      setCompletionHistory([
+        { date: '2025-05-01', rate: 80 },
+        { date: '2025-05-02', rate: 90 },
+      ]);
+    }, [setCompletionHistory]);
+  
+    return (
+      <div className="p-4">
+        <h2 className="text-xl font-semibold mb-2">Overview Stats</h2>
+        <OverviewStats 
+          streakData={streakData}
+          completionRate={completionRate}
+        />
+      </div>
+    );
+  };
