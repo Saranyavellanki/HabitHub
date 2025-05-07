@@ -217,7 +217,7 @@ function HabitDataProvider({ children }: { children: ReactNode }) {
       }
     });
     
-    return { longestStreak: longestStreak, currentStreak };
+    return { longestStreak, currentStreak };
   };
 
   // Calculate completion rate
@@ -282,11 +282,6 @@ function HabitDataProvider({ children }: { children: ReactNode }) {
       return habit;
     }));
   };
-
-  // Memoize calculations
-// In HabitDataProvider, before the context value
-const streakData = calculateStreakData();
-  const completionRate = calculateCompletionRate();
 
   // Context value
   const value = {
@@ -1439,7 +1434,7 @@ function HabitCharts() {
                                   </div>
   
                                   <div>
-                                    <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Today's Progress</h4>
+                                    <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400">Today&apos;s Progress</h4>
                                     <p className="mt-1 text-sm text-gray-900 dark:text-white">
                                       {habit.progress} / {habit.goal} {habit.unit}
                                     </p>
@@ -1987,7 +1982,7 @@ function HabitCharts() {
                 {renderSortArrow("category")}
               </button>
               <div className="col-span-5 sm:col-span-3 text-sm font-medium text-gray-700 dark:text-gray-300">
-                Today's Progress
+                Today&apos;s Progress
               </div>
               <button
                 onClick={() => handleSort("streak")}
