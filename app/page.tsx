@@ -284,7 +284,8 @@ function HabitDataProvider({ children }: { children: ReactNode }) {
   };
 
   // Memoize calculations
-  const streakData = calculateStreakData();
+// In HabitDataProvider, before the context value
+const streakData = calculateStreakData();
   const completionRate = calculateCompletionRate();
 
   // Context value
@@ -295,8 +296,8 @@ function HabitDataProvider({ children }: { children: ReactNode }) {
     deleteHabit,
     updateHabitProgress,
     updateHabitCompletion,
-    streakData,
-    completionRate,
+    streakData: calculateStreakData(),
+    completionRate: calculateCompletionRate(),
     completionHistory,
     setCompletionHistory
   };
@@ -1614,24 +1615,21 @@ function HabitCharts() {
   }
   
   // Helper function to get category badge color
-  function getCategoryBadgeColor(category: string): string {
-    switch (category.toLowerCase()) {
-      case "health":
-        return "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400";
-      case "fitness":
-        return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400";
-      case "productivity":
-        return "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400";
-      case "nutrition":
-        return "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400";
-      case "mindfulness":
-        return "bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400";
-      case "sleep":
-        return "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400";
-      default:
-        return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400";
-    }
-  }
+  type CategoryBadgeColor = {
+    [key: string]: string;
+  };
+  
+  const getCategoryBadgeColor = (category: string): string => {
+    const colors: CategoryBadgeColor = {
+      health: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+      fitness: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+      productivity: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
+      nutrition: "bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400",
+      mindfulness: "bg-teal-100 text-teal-800 dark:bg-teal-900/30 dark:text-teal-400",
+      sleep: "bg-indigo-100 text-indigo-800 dark:bg-indigo-900/30 dark:text-indigo-400"
+    };
+    return colors[category.toLowerCase()] || "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-400";
+  }; 
 
 
   interface NewHabitModalProps {
@@ -2043,7 +2041,7 @@ function HabitCharts() {
                       ) : (
                         <div className="flex items-center space-x-2">
                        
-                       <input
+<input
   type="range"
   min="0"
   max={habit.goal}
@@ -2052,38 +2050,11 @@ function HabitCharts() {
   onChange={(e) => {
     e.stopPropagation();
     handleProgressChange(habit.id, parseInt(e.target.value));
-    
   }}
-  className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer 
-    [&::-webkit-slider-thumb]:appearance-none 
-    [&::-webkit-slider-thumb]:h-4 
-    [&::-webkit-slider-thumb]:w-4 
-    [&::-webkit-slider-thumb]:rounded-full 
-    [&::-webkit-slider-thumb]:bg-white
-    [&::-webkit-slider-thumb]:border-[2px]
-    [&::-webkit-slider-thumb]:border-white
-    /* White dot styles */
-    [&::-webkit-slider-thumb]:relative
-    [&::-webkit-slider-thumb]:before:content-['']
-    [&::-webkit-slider-thumb]:before:absolute
-    [&::-webkit-slider-thumb]:before:w-1.5
-    [&::-webkit-slider-thumb]:before:h-1.5
-    [&::-webkit-slider-thumb]:before:bg-white
-    [&::-webkit-slider-thumb]:before:rounded-full
-    [&::-webkit-slider-thumb]:before:top-1/2
-    [&::-webkit-slider-thumb]:before:left-1/2
-    [&::-webkit-slider-thumb]:before:transform
-    [&::-webkit-slider-thumb]:before:-translate-x-1/2
-    [&::-webkit-slider-thumb]:before:-translate-y-1/2
-    [&::-webkit-slider-runnable-track]:rounded-full
-    [&::-webkit-slider-runnable-track]:bg-gradient-to-r 
-    [&::-webkit-slider-runnable-track]:from-blue-500 
-    [&::-webkit-slider-runnable-track]:to-blue-500
-    [&::-webkit-slider-runnable-track]:bg-[length:var(--progress)_100%]
-    [&::-webkit-slider-runnable-track]:bg-no-repeat"
+  className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer"
   style={{
-    '--progress': `${(habit.progress / habit.goal) * 100}%`
-  } as React.CSSProperties}
+    background: `linear-gradient(to right, #3b82f6 0%, #3b82f6 ${(habit.progress / habit.goal) * 100}%, #e5e7eb ${(habit.progress / habit.goal) * 100}%, #e5e7eb 100%)`
+  }}
 />
                           <span className="text-xs font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">
                             {habit.progress}/{habit.goal} {habit.unit}
@@ -2519,17 +2490,17 @@ function HabitCharts() {
   export default function Home() {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const [activeTab, setActiveTab] = useState("dashboard");
-    const { theme } = useTheme(); // Get the current theme
+    const { theme } = useTheme();
   
-
-  useEffect(() => {
-    const html = document.documentElement;
-    if (theme === 'dark') {
-      html.classList.add('dark');
-    } else {
-      html.classList.remove('dark');
-    }
-  }, [theme]);
+    useEffect(() => {
+      const html = document.documentElement;
+      if (theme === 'dark') {
+        html.classList.add('dark');
+      } else {
+        html.classList.remove('dark');
+      }
+    }, [theme]);
+  
     return (
       <ThemeProvider>
         <HabitDataProvider>
@@ -2565,29 +2536,29 @@ function HabitCharts() {
   }
 
 
-  const StatsDisplay = () => {
-    const habitContext = useContext(HabitContext);
+  // const StatsDisplay = () => {
+  //   const habitContext = useContext(HabitContext);
   
-    if (!habitContext) {
-      return <div>Loading...</div>;
-    }
+  //   if (!habitContext) {
+  //     return <div>Loading...</div>;
+  //   }
   
-    const { streakData, completionRate, setCompletionHistory } = habitContext;
+  //   const { streakData, completionRate, setCompletionHistory } = habitContext;
   
-    useEffect(() => {
-      setCompletionHistory([
-        { date: '2025-05-01', rate: 80 },
-        { date: '2025-05-02', rate: 90 },
-      ]);
-    }, [setCompletionHistory]);
+  //   useEffect(() => {
+  //     setCompletionHistory([
+  //       { date: '2025-05-01', rate: 80 },
+  //       { date: '2025-05-02', rate: 90 },
+  //     ]);
+  //   }, [setCompletionHistory]);
   
-    return (
-      <div className="p-4">
-        <h2 className="text-xl font-semibold mb-2">Overview Stats</h2>
-        <OverviewStats 
-          streakData={streakData}
-          completionRate={completionRate}
-        />
-      </div>
-    );
-  };
+  //   return (
+  //     <div className="p-4">
+  //       <h2 className="text-xl font-semibold mb-2">Overview Stats</h2>
+  //       <OverviewStats 
+  //         streakData={streakData}
+  //         completionRate={completionRate}
+  //       />
+  //     </div>
+  //   );
+  // };
