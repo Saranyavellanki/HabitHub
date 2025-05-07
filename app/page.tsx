@@ -6,7 +6,7 @@ import {
     Plus, Filter, ChevronDown, ChevronUp, Github, Twitter, Instagram, Heart,
     X, CalendarDays, Check, Edit2, Trash2, Clock, 
     ChevronLeft, ChevronRight, AlertCircle, Calendar, ArrowUp, ArrowDown,
-    Menu, Moon, Sun, Settings, User, Bell, Save, Flame, CheckCircle2, BarChart3 ,ArrowRight, 
+    Menu, Moon, Sun, Settings, User, Bell, Save,ArrowRight, 
     Shield, 
     FileText, 
     HelpCircle 
