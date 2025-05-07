@@ -824,83 +824,83 @@ function SettingsModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
 }
 
 // OverviewStats component
-function OverviewStats({ streakData, completionRate }: { 
-  streakData: {
-    longestStreak: number;
-    currentStreak: number;
-  };
-  completionRate: number;
-}) {
-  const stats = [
-    {
-      name: "Current Streak",
-      value: `${streakData.currentStreak} days`,
-      icon: <Flame className="h-5 w-5 text-orange-500" />,
-      description: "Keep it going!",
-      color: "bg-orange-50 dark:bg-orange-900/20",
-      border: "border-orange-200 dark:border-orange-800/30",
-      textColor: "text-orange-700 dark:text-orange-400"
-    },
-    {
-      name: "Longest Streak",
-      value: `${streakData.longestStreak} days`,
-      icon: <Calendar className="h-5 w-5 text-blue-500" />,
-      description: "Your personal best",
-      color: "bg-blue-50 dark:bg-blue-900/20",
-      border: "border-blue-200 dark:border-blue-800/30",
-      textColor: "text-blue-700 dark:text-blue-400"
-    },
-    {
-      name: "Completion Rate",
-      value: `${(completionRate * 100).toFixed(0)}%`,
-      icon: <CheckCircle2 className="h-5 w-5 text-green-500" />,
-      description: "Last 7 days",
-      color: "bg-green-50 dark:bg-green-900/20",
-      border: "border-green-200 dark:border-green-800/30",
-      textColor: "text-green-700 dark:text-green-400"
-    },
-    {
-      name: "Active Habits",
-      value: "8",
-      icon: <BarChart3 className="h-5 w-5 text-purple-500" />,
-      description: "On your dashboard",
-      color: "bg-purple-50 dark:bg-purple-900/20",
-      border: "border-purple-200 dark:border-purple-800/30",
-      textColor: "text-purple-700 dark:text-purple-400"
-    }
-  ];
+// function OverviewStats({ streakData, completionRate }: { 
+//   streakData: {
+//     longestStreak: number;
+//     currentStreak: number;
+//   };
+//   completionRate: number;
+// }) {
+//   const stats = [
+//     {
+//       name: "Current Streak",
+//       value: `${streakData.currentStreak} days`,
+//       icon: <Flame className="h-5 w-5 text-orange-500" />,
+//       description: "Keep it going!",
+//       color: "bg-orange-50 dark:bg-orange-900/20",
+//       border: "border-orange-200 dark:border-orange-800/30",
+//       textColor: "text-orange-700 dark:text-orange-400"
+//     },
+//     {
+//       name: "Longest Streak",
+//       value: `${streakData.longestStreak} days`,
+//       icon: <Calendar className="h-5 w-5 text-blue-500" />,
+//       description: "Your personal best",
+//       color: "bg-blue-50 dark:bg-blue-900/20",
+//       border: "border-blue-200 dark:border-blue-800/30",
+//       textColor: "text-blue-700 dark:text-blue-400"
+//     },
+//     {
+//       name: "Completion Rate",
+//       value: `${(completionRate * 100).toFixed(0)}%`,
+//       icon: <CheckCircle2 className="h-5 w-5 text-green-500" />,
+//       description: "Last 7 days",
+//       color: "bg-green-50 dark:bg-green-900/20",
+//       border: "border-green-200 dark:border-green-800/30",
+//       textColor: "text-green-700 dark:text-green-400"
+//     },
+//     {
+//       name: "Active Habits",
+//       value: "8",
+//       icon: <BarChart3 className="h-5 w-5 text-purple-500" />,
+//       description: "On your dashboard",
+//       color: "bg-purple-50 dark:bg-purple-900/20",
+//       border: "border-purple-200 dark:border-purple-800/30",
+//       textColor: "text-purple-700 dark:text-purple-400"
+//     }
+//   ];
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-      {stats.map((stat, index) => (
-        <motion.div
-          key={stat.name}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3, delay: index * 0.1 }}
-          className={`${stat.color} ${stat.border} border rounded-xl p-4 flex flex-col`}
-        >
-          <div className="flex items-center justify-between">
-            <div className="font-medium text-gray-500 dark:text-gray-400 text-sm">
-              {stat.name}
-            </div>
-            <div className="rounded-full p-2 bg-white dark:bg-gray-800">
-              {stat.icon}
-            </div>
-          </div>
-          <div className="mt-2 flex items-end justify-between">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">
-              {stat.value}
-            </div>
-            <div className={`text-xs ${stat.textColor}`}>
-              {stat.description}
-            </div>
-          </div>
-        </motion.div>
-      ))}
-    </div>
-  );
-}
+//   return (
+//     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+//       {stats.map((stat, index) => (
+//         <motion.div
+//           key={stat.name}
+//           initial={{ opacity: 0, y: 20 }}
+//           animate={{ opacity: 1, y: 0 }}
+//           transition={{ duration: 0.3, delay: index * 0.1 }}
+//           className={`${stat.color} ${stat.border} border rounded-xl p-4 flex flex-col`}
+//         >
+//           <div className="flex items-center justify-between">
+//             <div className="font-medium text-gray-500 dark:text-gray-400 text-sm">
+//               {stat.name}
+//             </div>
+//             <div className="rounded-full p-2 bg-white dark:bg-gray-800">
+//               {stat.icon}
+//             </div>
+//           </div>
+//           <div className="mt-2 flex items-end justify-between">
+//             <div className="text-2xl font-bold text-gray-900 dark:text-white">
+//               {stat.value}
+//             </div>
+//             <div className={`text-xs ${stat.textColor}`}>
+//               {stat.description}
+//             </div>
+//           </div>
+//         </motion.div>
+//       ))}
+//     </div>
+//   );
+// }
 
 function HabitCharts() {
     const [activeChart, setActiveChart] = useState("completion");
