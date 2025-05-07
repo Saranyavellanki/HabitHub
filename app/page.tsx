@@ -904,7 +904,7 @@ function OverviewStats({ streakData, completionRate }: {
 
 function HabitCharts() {
     const [activeChart, setActiveChart] = useState("completion");
-    const { habits, completionHistory, streakData } = useHabitData();
+    const { habits, completionHistory } = useHabitData();
     
     // Chart options
     const chartOptions = [
@@ -928,7 +928,12 @@ function HabitCharts() {
     }));
   
     // Prepare category distribution data
-    const categoryData = habits.reduce((acc: any[], habit) => {
+    interface CategoryData {
+      name: string;
+      value: number;
+    }
+    
+    const categoryData = habits.reduce<CategoryData[]>((acc, habit) => {
       const existingCategory = acc.find(item => item.name === habit.category);
       if (existingCategory) {
         existingCategory.value += 1;
@@ -937,6 +942,7 @@ function HabitCharts() {
       }
       return acc;
     }, []);
+    
   
     // Prepare weekly performance data
     const weeklyPerformanceData = [
@@ -1005,8 +1011,8 @@ function HabitCharts() {
                       color: "#F3F4F6"
                     }} 
                     itemStyle={{ color: "#F3F4F6" }} 
-                    formatter={(value: any) => [`${value}%`, "Completion Rate"]}
-                  />
+                    formatter={(value: number | string) => [`${value}%`, "Completion Rate"]}
+                    />
                   <Line 
                     type="monotone" 
                     dataKey="rate" 
@@ -1128,8 +1134,8 @@ function HabitCharts() {
                       color: "#F3F4F6"
                     }} 
                     itemStyle={{ color: "#F3F4F6" }} 
-                    formatter={(value: any) => [`${value}%`, "Completion Rate"]}
-                  />
+                    formatter={(value: number | string) => [`${value}%`, "Completion Rate"]}
+                    />
                   <Bar 
                     dataKey="completion" 
                     fill="#3B82F6" 
@@ -2531,29 +2537,3 @@ function HabitCharts() {
   }
 
 
-  // const StatsDisplay = () => {
-  //   const habitContext = useContext(HabitContext);
-  
-  //   if (!habitContext) {
-  //     return <div>Loading...</div>;
-  //   }
-  
-  //   const { streakData, completionRate, setCompletionHistory } = habitContext;
-  
-  //   useEffect(() => {
-  //     setCompletionHistory([
-  //       { date: '2025-05-01', rate: 80 },
-  //       { date: '2025-05-02', rate: 90 },
-  //     ]);
-  //   }, [setCompletionHistory]);
-  
-  //   return (
-  //     <div className="p-4">
-  //       <h2 className="text-xl font-semibold mb-2">Overview Stats</h2>
-  //       <OverviewStats 
-  //         streakData={streakData}
-  //         completionRate={completionRate}
-  //       />
-  //     </div>
-  //   );
-  // };
